@@ -86,7 +86,9 @@ int main() {
     writeResultToFile(result_1, 1);
     // END PART 1
 
+    // PART 2
     std::unordered_map<int, int> counts = getCounts(col2);
     int result_2 = countProducts(col1, counts);
     writeResultToFile(result_2, 2);
+    // END PART 2
 }
