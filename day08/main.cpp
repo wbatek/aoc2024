@@ -45,38 +45,38 @@ std::unordered_map<char, std::vector<std::pair<int, int>>> getPositions(std::vec
     return antenna_positions;
 }
 
-int part1(std::vector<std::vector<char>> lines, std::unordered_map<char, std::vector<std::pair<int, int>>>& positions) {
-    int count = 0;
-
-    for(const auto& [ch, vec] : positions) {
-        for (size_t i = 0; i < vec.size(); i++) {
-            for (size_t j = i + 1; j < vec.size(); j++) {
-                auto [r1, c1] = vec[i];
-                auto [r2, c2] = vec[j];
-                int r_diff = r2 - r1;
-                int c_diff = c2 - c1;
-
-                int r_delta = r1 - r_diff;
-                int c_delta = c1 - c_diff;
-                if(r_delta >= 0 && r_delta < lines.size() && c_delta >= 0 && c_delta < lines[r1].size()) {
-                    if(lines[r_delta][c_delta] != Chars::SEEN) {
-                        count++;
-                        lines[r_delta][c_delta] = Chars::SEEN;
-                    }
-                }
-                r_delta = r2 + r_diff;
-                c_delta = c2 + c_diff;
-                if(r_delta >= 0 && r_delta < lines.size() && c_delta >= 0 && c_delta < lines[r1].size()) {
-                    if(lines[r_delta][c_delta] != Chars::SEEN) {
-                        count++;
-                        lines[r_delta][c_delta] = Chars::SEEN;
-                    }
-                }
-            }
-        }
-    }
-    return count;
-}
+//int part1(std::vector<std::vector<char>> lines, std::unordered_map<char, std::vector<std::pair<int, int>>>& positions) {
+//    int count = 0;
+//
+//    for(const auto& [ch, vec] : positions) {
+//        for (size_t i = 0; i < vec.size(); i++) {
+//            for (size_t j = i + 1; j < vec.size(); j++) {
+//                auto [r1, c1] = vec[i];
+//                auto [r2, c2] = vec[j];
+//                int r_diff = r2 - r1;
+//                int c_diff = c2 - c1;
+//
+//                int r_delta = r1 - r_diff;
+//                int c_delta = c1 - c_diff;
+//                if(r_delta >= 0 && r_delta < lines.size() && c_delta >= 0 && c_delta < lines[r1].size()) {
+//                    if(lines[r_delta][c_delta] != Chars::SEEN) {
+//                        count++;
+//                        lines[r_delta][c_delta] = Chars::SEEN;
+//                    }
+//                }
+//                r_delta = r2 + r_diff;
+//                c_delta = c2 + c_diff;
+//                if(r_delta >= 0 && r_delta < lines.size() && c_delta >= 0 && c_delta < lines[r1].size()) {
+//                    if(lines[r_delta][c_delta] != Chars::SEEN) {
+//                        count++;
+//                        lines[r_delta][c_delta] = Chars::SEEN;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    return count;
+//}
 
 int part2(std::vector<std::vector<char>> lines, std::unordered_map<char, std::vector<std::pair<int, int>>>& positions, int range) {
     int count = 0;
@@ -89,7 +89,7 @@ int part2(std::vector<std::vector<char>> lines, std::unordered_map<char, std::ve
                 int r_diff = r2 - r1;
                 int c_diff = c2 - c1;
 
-                for(int x = 0; x <= range; x++) {
+                for(int x = (range == 1 ? 1 : 0); x <= range; x++) {
                     int r_delta = r1 - x * r_diff;
                     int c_delta = c1 - x * c_diff;
                     if(r_delta >= 0 && r_delta < lines.size() && c_delta >= 0 && c_delta < lines[r1].size()) {
@@ -125,7 +125,7 @@ int main() {
     }
 
     std::unordered_map<char, std::vector<std::pair<int, int>>> antenna_positions = getPositions(lines);
-    int result_1 = part1(lines, antenna_positions);
+    int result_1 = part2(lines, antenna_positions, 1);
     writeResultToFile(result_1, 1);
 
     int result_2 = part2(lines, antenna_positions, lines.size());
