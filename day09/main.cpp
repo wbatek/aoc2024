@@ -49,7 +49,7 @@ std::vector<std::string> constructDisk(std::vector<int>& numbers) {
     return disk;
 }
 
-std::vector<std::string> changeOrder(std::vector<std::string>& disk) {
+std::vector<std::string> changeOrder(std::vector<std::string> disk) {
     size_t left = 0, right = disk.size() - 1;
     while(left < right) {
         while(disk[left] != ".") left++;
@@ -92,7 +92,7 @@ std::pair<size_t, size_t> findFirstSpace(std::vector<std::string>& disk, size_t 
     return std::make_pair(-1, -1);
 }
 
-std::vector<std::string> changeOrderFullBlocks(std::vector<std::string>& disk) {
+std::vector<std::string> changeOrderFullBlocks(std::vector<std::string> disk) {
     size_t right = disk.size() - 1;
     while(right >= 0) {
         while(right > 0 && disk[right] == ".") right--;
@@ -128,6 +128,7 @@ unsigned long long calculateChecksum(std::vector<std::string>& disk) {
 }
 
 int main() {
+    // PART 1
     std::vector<int> numbers;
     try {
         std::string filePath = "input.txt";
