@@ -16,7 +16,7 @@ std::vector<std::vector<int>> readFileLines(const std::string& filePath) {
     while(std::getline(file, line)) {
         std::vector<int> currentLine;
         for(char c : line) {
-            if (isdigit(c)) { // Ensure the character is a digit
+            if (isdigit(c)) {
                 currentLine.push_back(c - '0');
             }
         }
@@ -95,18 +95,11 @@ bool part2Condition(int cellValue, std::pair<int, int>& p, std::set<std::pair<in
     return (cellValue == 9);
 }
 
-int part1(std::vector<std::vector<int>>& grid, std::vector<std::pair<int, int>>& zeroLocations) {
+template<typename Func>
+int solve(std::vector<std::vector<int>>& grid, std::vector<std::pair<int, int>>& zeroLocations, Func conditionFunc) {
     int result = 0;
-    for (std::pair<int, int> currentZero : zeroLocations) {
-        result += getReachableCount(grid, currentZero, part1Condition);
-    }
-    return result;
-}
-
-int part2(std::vector<std::vector<int>>& grid, std::vector<std::pair<int, int>>& zeroLocations) {
-    int result = 0;
-    for (std::pair<int, int> currentZero : zeroLocations) {
-        result += getReachableCount(grid, currentZero, part2Condition);
+    for(auto currentZero : zeroLocations) {
+        result += getReachableCount(grid, currentZero, conditionFunc);
     }
     return result;
 }
@@ -122,10 +115,10 @@ int main() {
         std::cerr << "Error: " << e.what() << std::endl;
     }
     std::vector<std::pair<int, int>> zeroLocations = getLocation<0>(lines);
-    int result_1 = part1(lines, zeroLocations);
+    int result_1 = solve(lines, zeroLocations, part1Condition);
     writeResultToFile(result_1, 1);
     
-    int result_2 = part2(lines, zeroLocations);
+    int result_2 = solve(lines, zeroLocations, part2Condition);
     writeResultToFile(result_2, 2);
 }
     
